@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>경기 카드소비 지도</title>
+<link rel="preconnect" href="https://server.arcgisonline.com">
+<link rel="preload" href="data/meta.json" as="fetch" crossorigin>
+<link rel="preload" href="data/geo.topo.json" as="fetch" crossorigin>
+<link rel="preload" href="data/cube/ALL.bin" as="fetch" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <h1>경기 카드소비 지도</h1>
+    <p class="sub">민간 카드사 소비 데이터 · 사용처 / 기간 / 지역별 매출</p>
+  </div>
+  <div class="filters" role="toolbar" aria-label="필터">
+    <fieldset class="f f-period">
+      <legend>기간</legend>
+      <div class="row">
+        <select id="m0" aria-label="시작 월"></select>
+        <span class="dash">–</span>
+        <select id="m1" aria-label="종료 월"></select>
+        <button id="play" class="icon-btn" title="월별 재생" aria-label="월별 재생">▶</button>
+      </div>
+      <div class="presets" id="presets"></div>
+    </fieldset>
+    <fieldset class="f">
+      <legend>사용처</legend>
+      <div class="row">
+        <select id="c1" aria-label="업종 대분류"></select>
+        <select id="c2" aria-label="업종 중분류"></select>
+      </div>
+    </fieldset>
+    <fieldset class="f">
+      <legend>지역</legend>
+      <div class="row">
+        <div class="seg" id="level" role="radiogroup" aria-label="지역 단위">
+          <button data-v="dong" role="radio">행정동</button>
+          <button data-v="sgg" role="radio">시군구</button>
+        </div>
+        <select id="city" aria-label="시군"></select>
+      </div>
+    </fieldset>
+    <fieldset class="f">
+      <legend>지표</legend>
+      <div class="row">
+        <div class="seg" id="metric" role="radiogroup" aria-label="지표">
+          <button data-v="amt" role="radio">매출금액</button>
+          <button data-v="cnt" role="radio">매출건수</button>
+          <button data-v="avg" role="radio">건당금액</button>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="map-wrap">
+    <div id="map" aria-label="지도"></div>
+    <div class="legend" id="legend" aria-live="polite"></div>
+    <div class="loading" id="loading">데이터 불러오는 중…</div>
+  </section>
+
+  <aside class="panel">
+    <div class="focus-head">
+      <div>
+        <div class="eyebrow" id="focusEyebrow">선택 영역</div>
+        <h2 id="focusTitle">전체</h2>
+      </div>
+      <button id="clearFocus" class="link-btn" hidden>선택 해제</button>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="card">
+      <div class="card-head">
+        <h3>월별 추이</h3>
+        <span class="hint">드래그해서 기간 선택</span>
+      </div>
+      <div id="trend" class="trend"></div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <h3 id="rankTitle">순위</h3>
+        <button id="rankAll" class="link-btn">전체 보기</button>
+      </div>
+      <ol id="rank" class="rank"></ol>
+    </div>
+    <details class="card notes">
+      <summary>데이터 안내</summary>
+      <ul id="notes"></ul>
+    </details>
+  </aside>
+</main>
+
+<div id="tip" class="tip" role="tooltip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+processed/
+raw_geo/
+members.json
+__pycache__/
+*.pyc
